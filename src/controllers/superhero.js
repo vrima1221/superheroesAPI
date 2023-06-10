@@ -36,13 +36,10 @@ async function updateHero(req, res) {
   const newImages = req.files.map(file => file.path);
   const heroDataToUpdate = req.body;
 
-  const data = heroDataToUpdate.images ? {
+  const data = {
     ...heroDataToUpdate,
-    images: [ ...heroDataToUpdate.images, ...newImages ]
-  } : {
-    ...heroDataToUpdate,
-    images: [ ...newImages ]
-  }
+    images: heroDataToUpdate.images ? [...heroDataToUpdate.images, ...newImages] : [...newImages]
+  };
 
   const updatedHero = await superheroService.update({ nickname }, data);
   
